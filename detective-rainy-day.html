@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DETECTIVE RAINY DAY</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0a0a1f;
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            overflow-y: auto;
+        }
+
+        /* LOADING SCREEN */
+        #landing {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #0a0a1f, #1a1a3a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            flex-direction: column;
+            transition: opacity 1.2s ease-out;
+        }
+        .loading-title {
+            font-size: 2.8rem;
+            text-shadow: 0 0 40px #00ffff;
+            animation: glow 1.5s infinite alternate;
+            margin-bottom: 30px;
+        }
+        .loading-bar {
+            width: 400px;
+            height: 25px;
+            border: 4px solid #ff00aa;
+            position: relative;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, #00ffff, #ff00ff);
+            animation: load 5s linear forwards;
+        }
+        .loading-text {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            opacity: 0;
+            transition: opacity 1.2s ease-out;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        h1 {
+            font-size: 3.6rem;
+            text-shadow: 0 0 40px #00ffff, 0 0 90px #ff00ff, 0 0 140px #ff0088;
+            animation: glow 1.5s infinite alternate;
+            letter-spacing: 6px;
+        }
+        .subtitle { font-size: 1.35rem; margin: 20px 0 50px; text-shadow: 0 0 20px #00ffff; }
+        .teaser {
+            padding: 24px 75px;
+            background: linear-gradient(#ff0066, #cc0044);
+            color: white;
+            font-size: 1.6rem;
+            text-decoration: none;
+            border: 7px solid #fff;
+            box-shadow: 0 0 60px #ff00aa;
+            cursor: pointer;
+            transition: all 0.4s;
+            letter-spacing: 4px;
+            display: inline-block;
+        }
+        .teaser:hover { transform: scale(1.15) rotate(4deg); box-shadow: 0 0 80px #ff00ff; }
+
+        section { padding: 100px 20px; border-top: 3px solid #ff00aa; }
+        .trailer-section { background: #0a0a1f; }
+        .screenshots { background: #11112a; }
+        .info { background: #11112a; }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 900px;
+            margin: 40px auto;
+            border: 8px solid #fff;
+            box-shadow: 0 0 40px #00ffff;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+        .gallery img {
+            width: 100%;
+            border: 5px solid #ff00aa;
+            box-shadow: 0 0 25px #00ffff;
+            transition: all 0.3s;
+        }
+        .gallery img:hover { transform: scale(1.06); box-shadow: 0 0 40px #ff00ff; }
+
+        .game-info {
+            max-width: 800px;
+            margin: 40px auto;
+            background: rgba(0,0,0,0.7);
+            padding: 35px;
+            border: 4px solid #00ffff;
+            text-align: left;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .stars { font-size: 2.4rem; color: #ffd700; margin: 10px 0; }
+
+        .credits {
+            padding: 80px 20px;
+            font-size: 0.95rem;
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        .rain { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            z-index: 1; 
+            pointer-events: none; 
+            opacity: 0.32; 
+        }
+
+        @keyframes glow { from { text-shadow: 0 0 30px #00ffff, 0 0 80px #ff00ff; } to { text-shadow: 0 0 60px #00ffff, 0 0 120px #ff00ff, 0 0 160px #ff0088; } }
+        @keyframes load { from { width: 0%; } to { width: 100%; } }
+    </style>
+</head>
+<body>
+
+    <!-- LOADING SCREEN -->
+    <div id="landing">
+        <div class="loading-title">DETECTIVE RAINY DAY</div>
+        <div class="loading-bar">
+            <div class="bar-fill"></div>
+        </div>
+        <div class="loading-text">LOADING CASE FILE...</div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <!-- HERO -->
+        <div class="hero">
+            <div class="container" style="z-index: 4;">
+                <h1>DETECTIVE RAINY DAY</h1>
+                <p class="subtitle" id="typewriter">A dark point & click detective game in an endless rainy city...</p>
+                <a href="#download" id="teaser" class="teaser">INVESTIGATE THE CASE →</a>
+            </div>
+            <canvas id="rain" class="rain"></canvas>
+        </div>
+
+        <!-- TRAILER -->
+        <section class="trailer-section">
+            <div class="container">
+                <h2 style="color:#00ffff; text-shadow: 0 0 20px #00ffff;">OFFICIAL TRAILER</h2>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VWV77WjPP_A" 
+                            title="Detective Rainy Day Trailer" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREENSHOTS -->
+        <section class="screenshots">
+            <div class="container">
+                <h2 style="color:#ff00aa;">SCREENSHOTS</h2>
+                <div class="gallery">
+                    <img src="https://i.imgur.com/fKcXv7E.png" alt="Screenshot 1">
+                    <img src="https://i.imgur.com/B8JmjU5.png" alt="Screenshot 2">
+                    <img src="https://i.imgur.com/wS0SgR0.png" alt="Screenshot 3">
+                    <img src="https://i.imgur.com/OuacV1B.png" alt="Screenshot 4">
+                    <img src="https://i.imgur.com/ZLkLJcL.png" alt="Screenshot 5">
+                </div>
+            </div>
+        </section>
+
+        <!-- GAME INFO -->
+        <section class="info">
+            <div class="container">
+                <h2 style="color:#ffff00;">GAME INFO</h2>
+                <div class="game-info">
+                    <p><strong>Author:</strong> DaFart?!</p>
+                    <p><strong>Genre:</strong> Adventure</p>
+                    <p><strong>Platforms:</strong> Windows</p>
+                    <p><strong>Status:</strong> Released</p>
+                    <p><strong>Published:</strong> June 27, 2026</p>
+                    
+                    <p><strong>Rating:</strong> 4.2 / 5 stars</p>
+                    <div class="stars">★★★★☆</div>
+                    <p><small>"Super atmospheric!" • "Creepy as hell, loved it" • "Short but amazing experience"</small></p>
+
+                    <p><strong>Tags:</strong> 3D, Atmospheric, Creepy, Detective, Fast-Paced, Horror, Indie, Mystery, Short, Singleplayer</p>
+                    <p><strong>Content:</strong> No generative AI was used</p>
+                </div>
+
+                <h2 style="color:#ffff00; margin-top: 50px;">OTHER GAMES</h2>
+                <div class="game-info">
+                    <p>More games coming soon from Vuk Dobric Games...</p>
+                    <p>Stay tuned for new releases!</p>
+                </div>
+
+                <h2 style="margin-top: 70px; color:#00ff99;" id="download">↓ DOWNLOAD NOW ↓</h2>
+                <a href="https://mega.nz/folder/E7gFyTzI#ejgbrvumnaZKAsAf0bAkUw" 
+                   target="_blank" 
+                   style="display:inline-block; padding:45px 120px; font-size:2.7rem; background:#00ff99; color:#000; border:10px solid #000; box-shadow:0 25px 0 #000; text-decoration:none; letter-spacing:5px; margin:20px;">
+                    DOWNLOAD GAME
+                </a>
+                <p style="margin-top: 20px; font-size:1.1rem;">DetectiveRainyDay.zip • ~310 MB</p>
+            </div>
+        </section>
+
+        <div class="credits">
+            Game created by <strong>DaFart?!</strong><br>
+            Vuk Dobric Games<br>
+            All Rights Reserved © 2026
+        </div>
+    </div>
+
+    <script>
+        // Loading Screen
+        setTimeout(() => {
+            const landing = document.getElementById('landing');
+            const main = document.querySelector('.main-content');
+            landing.style.opacity = '0';
+            setTimeout(() => {
+                landing.style.display = 'none';
+                main.style.opacity = '1';
+            }, 1200);
+        }, 5000);
+
+        // Typewriter
+        const text = "A dark point & click detective game in an endless rainy city...";
+        let i = 0;
+        const typewriter = document.getElementById('typewriter');
+        function type() {
+            if (i < text.length) {
+                typewriter.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, 45);
+            }
+        }
+        setTimeout(type, 5200);
+
+        // Super Optimized Rain
+        const canvas = document.getElementById('rain');
+        const ctx = canvas.getContext('2d', { alpha: true });
+        let w = canvas.width = window.innerWidth;
+        let h = canvas.height = window.innerHeight;
+
+        const drops = [];
+        class Drop {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * w;
+                this.y = Math.random() * h - h;
+                this.length = Math.random() * 26 + 14;
+                this.speed = Math.random() * 20 + 13;
+            }
+            update() { this.y += this.speed; if (this.y > h) this.reset(); }
+            draw() {
+                ctx.beginPath();
+                ctx.strokeStyle = '#77aaff';
+                ctx.lineWidth = 2.4;
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x, this.y + this.length);
+                ctx.stroke();
+            }
+        }
+        for (let k = 0; k < 140; k++) drops.push(new Drop()); // Even lighter
+
+        function animate() {
+            ctx.clearRect(0, 0, w, h);
+            drops.forEach(d => { d.update(); d.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
